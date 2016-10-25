@@ -1,0 +1,61 @@
+<?php
+
+// src/AppBundle/Entity/Review.php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
+
+/**
+ * A review of a book.
+ *
+ * @ApiResource
+ * @ORM\Entity
+ */
+class Review
+{
+    /**
+     * @var int The id of this review.
+     *
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    private $id;
+
+    /**
+     * @var int The rating of this review (between 0 and 5).
+     *
+     * @ORM\Column(type="smallint")
+     */
+    private $rating;
+
+    /**
+     * @var string the body of the review.
+     *
+     * @ORM\Column(type="text")
+     */
+    private $body;
+
+    /**
+     * @var string The author of the review.
+     *
+     * @ORM\Column
+     */
+    private $author;
+
+    /**
+     * @var \DateTimeInterface The date of publication of this review.
+     *
+     * @ORM\Column(type="datetime")
+     */
+    private $publicationDate;
+
+    /**
+     * @var Book The book this review is about.
+     *
+     * @ORM\ManyToOne(targetEntity="Book", inversedBy="reviews")
+     */
+    private $book;
+}

@@ -1,0 +1,68 @@
+<?php
+
+// src/AppBundle/Entity/Book.php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
+
+/**
+ * A book.
+ *
+ * @ApiResource
+ * @ORM\Entity
+ */
+class Book
+{
+    /**
+     * @var int The id of this book.
+     *
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    private $id;
+
+    /**
+     * @var string|null The ISBN number if this book (or null if doesn't have one).
+     *
+     * @ORM\Column(nullable=true)
+     */
+    private $isbn;
+
+    /**
+     * @var string The title of this book.
+     *
+     * @ORM\Column
+     */
+    private $title;
+
+    /**
+     * @var string The description of this book.
+     *
+     * @ORM\Column(type="text")
+     */
+    private $description;
+
+    /**
+     * @var string The author of this book.
+     *
+     * @ORM\Column
+     */
+    private $author;
+
+    /**
+     * @var \DateTimeInterface The publication date of this book.
+     *
+     * @ORM\Column(type="datetime")
+     */
+    private $publicationDate;
+
+    /**
+     * @var Review[] Available reviews for this book.
+     *
+     * @ORM\OneToMany(targetEntity="Review", mappedBy="book")
+     */
+    private $reviews;
+}

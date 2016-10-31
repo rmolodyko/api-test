@@ -10,6 +10,9 @@ use Doctrine\ORM\Tools\SchemaTool;
  */
 class FeatureContext implements Context, SnippetAcceptingContext
 {
+    const API_CUSTOMER_EMAIL = 'customer@customer.api';
+    const API_CUSTOMER_PASSWORD = 'customer';
+
     /**
      * @var ManagerRegistry
      */
@@ -59,5 +62,28 @@ class FeatureContext implements Context, SnippetAcceptingContext
     public function dropDatabase()
     {
         $this->schemaTool->dropSchema($this->classes);
+    }
+
+    /**
+     * @Given Refresh database
+     */
+    public function refreshDatabase()
+    {
+        $this->schemaTool->dropDatabase();
+        $this->createDatabase();
+    }
+
+    /**
+     * @Given Create api customer
+     */
+    public function createApiCustomer()
+    {
+        $user = new \AppBundle\Entity\User();
+        $user->setEmail(self::API_CUSTOMER_EMAIL);
+        $user->setPlainPassword(self::API_CUSTOMER_PASSWORD);
+        $user->setEnabled(true);
+
+        $this->manager->persist($user);
+        $this->manager->flush();
     }
 }

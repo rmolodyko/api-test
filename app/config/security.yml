@@ -20,7 +20,7 @@ security:
 #            security: false
 
         api:
-            pattern:   ^/api1/(?!login|doc)
+            pattern:   ^/api/(?!login|doc)
             stateless: true
             guard:
                 authenticators:

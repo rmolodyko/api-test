@@ -13,6 +13,7 @@ The API Platform Framework
 2. http://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html
 3. https://github.com/nelmio/alice#table-of-contents
 4. https://github.com/h4cc/AliceFixturesBundle
+5. https://github.com/h4cc/AliceDemo/blob/master/src/h4cc/AliceDemoBundle/DataFixtures/Alice/selenium.yml
 
 ```
     "doctrine/data-fixtures": "^1.2"
@@ -27,3 +28,14 @@ Exec fixtures:
 ## Doctrine association
 
 1. http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/working-with-associations.html
+
+## Testing
+
+Run tests
+
+    php vendor/bin/behat
+
+## Security
+
+1. http://stackoverflow.com/questions/29309215/security-yml-causes-invalidargumentexception-you-must-at-least-add-one-authent
+2. http://symfony.com/doc/current/security/guard_authentication.html

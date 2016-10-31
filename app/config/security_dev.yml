@@ -1,0 +1,5 @@
+security:
+    firewalls:
+        api:
+            pattern:   ^/api/dev
+            anonymous: ~

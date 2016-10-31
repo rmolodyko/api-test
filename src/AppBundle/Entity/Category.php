@@ -7,15 +7,15 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * An intention.
+ * Category of motivations
  *
  * @ApiResource
  * @ORM\Entity
  */
-class Intention
+class Category
 {
     /**
-     * @var int The id of this review.
+     * @var int Id
      *
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -24,7 +24,7 @@ class Intention
     private $id;
 
     /**
-     * @var string The title of intention
+     * @var string The title of category
      *
      * @ORM\Column
      * @Assert\NotBlank
@@ -32,7 +32,7 @@ class Intention
     private $title;
 
     /**
-     * @var string Description of the intention
+     * @var string Description of the category
      *
      * @ORM\Column(type="text")
      * @Assert\NotBlank
@@ -40,20 +40,34 @@ class Intention
     private $description;
 
     /**
-     * @var \DateTimeInterface The date of publication of this intention.
+     * @var \DateTimeInterface The date of publication of this category
      *
      * @ORM\Column(type="datetime")
      * @Assert\NotBlank
      */
-    private $publicationDate;
+    private $created;
 
     /**
-     * @var User The book this review is about.
+     * @var Motivation[] List of motivations
      *
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="intentions")
+     * @ORM\OneToMany(targetEntity="Motivation", mappedBy="category", cascade={"persist", "remove"})
+     */
+    private $motivations;
+
+    /**
+     * @var User User
+     *
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="categories")
      * @Assert\NotBlank
      */
     private $user;
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->motivations = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -70,7 +84,7 @@ class Intention
      *
      * @param string $title
      *
-     * @return Intention
+     * @return Category
      */
     public function setTitle($title)
     {
@@ -94,7 +108,7 @@ class Intention
      *
      * @param string $description
      *
-     * @return Intention
+     * @return Category
      */
     public function setDescription($description)
     {
@@ -114,27 +128,61 @@ class Intention
     }
 
     /**
-     * Set publicationDate
+     * Set created
      *
-     * @param \DateTime $publicationDate
+     * @param \DateTime $created
      *
-     * @return Intention
+     * @return Category
      */
-    public function setPublicationDate($publicationDate)
+    public function setCreated($created)
     {
-        $this->publicationDate = $publicationDate;
+        $this->created = $created;
 
         return $this;
     }
 
     /**
-     * Get publicationDate
+     * Get created
      *
      * @return \DateTime
      */
-    public function getPublicationDate()
+    public function getCreated()
     {
-        return $this->publicationDate;
+        return $this->created;
+    }
+
+    /**
+     * Add motivation
+     *
+     * @param \AppBundle\Entity\Motivation $motivation
+     *
+     * @return Category
+     */
+    public function addMotivation(\AppBundle\Entity\Motivation $motivation)
+    {
+        $this->motivations[] = $motivation;
+
+        return $this;
+    }
+
+    /**
+     * Remove motivation
+     *
+     * @param \AppBundle\Entity\Motivation $motivation
+     */
+    public function removeMotivation(\AppBundle\Entity\Motivation $motivation)
+    {
+        $this->motivations->removeElement($motivation);
+    }
+
+    /**
+     * Get motivations
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMotivations()
+    {
+        return $this->motivations;
     }
 
     /**
@@ -142,7 +190,7 @@ class Intention
      *
      * @param \AppBundle\Entity\User $user
      *
-     * @return Intention
+     * @return Category
      */
     public function setUser(\AppBundle\Entity\User $user = null)
     {

@@ -31,26 +31,109 @@ class User extends BaseUser
     protected $email;
 
     /**
-     * @var array
-     * @Assert\NotBlank
-     * @Groups({"user"})
-     */
-    protected $roles;
-
-    /**
      * @var string Plain password of user
      * @Groups({"user-write"})
      */
     protected $plainPassword;
 
     /**
-     * @Groups({"user"})
-     * @Assert\NotBlank
+     * @var Motivation[] List of motivation
+     *
+     * @ORM\OneToMany(targetEntity="Motivation", mappedBy="user")
      */
-    protected $username;
+    private $motivations;
 
+    /**
+     * @var Category[] List of motivation
+     *
+     * @ORM\OneToMany(targetEntity="Category", mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $categories;
+
+    /**
+     * Check if user
+     */
     public function isUser(UserInterface $user = null)
     {
         return $user instanceof self && $user->id === $this->id;
+    }
+
+    /**
+     * Set email
+     */
+    public function setEmail($email)
+    {
+        $this->username = $email;
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Add motivation
+     *
+     * @param \AppBundle\Entity\Motivation $motivation
+     *
+     * @return User
+     */
+    public function addMotivation(\AppBundle\Entity\Motivation $motivation)
+    {
+        $this->motivations[] = $motivation;
+
+        return $this;
+    }
+
+    /**
+     * Remove motivation
+     *
+     * @param \AppBundle\Entity\Motivation $motivation
+     */
+    public function removeMotivation(\AppBundle\Entity\Motivation $motivation)
+    {
+        $this->motivations->removeElement($motivation);
+    }
+
+    /**
+     * Get motivations
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMotivations()
+    {
+        return $this->motivations;
+    }
+
+    /**
+     * Add category
+     *
+     * @param \AppBundle\Entity\Category $category
+     *
+     * @return User
+     */
+    public function addCategory(\AppBundle\Entity\Category $category)
+    {
+        $this->categories[] = $category;
+
+        return $this;
+    }
+
+    /**
+     * Remove category
+     *
+     * @param \AppBundle\Entity\Category $category
+     */
+    public function removeCategory(\AppBundle\Entity\Category $category)
+    {
+        $this->categories->removeElement($category);
+    }
+
+    /**
+     * Get categories
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCategories()
+    {
+        return $this->categories;
     }
 }

@@ -1,5 +1,2 @@
 user:
     class: AppBundle\Entity\User
-
-intention:
-    class: AppBundle\Entity\Intention

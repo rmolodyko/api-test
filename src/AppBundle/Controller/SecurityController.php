@@ -52,7 +52,7 @@ class SecurityController extends Controller
 
         // Password check
         if(!$this->get('security.password_encoder')->isPasswordValid($user, $data['password'])) {
-            throw $this->createAccessDeniedException();
+            throw $this->createAccessDeniedException('Access denied');
         }
 
         // Create JWT token that hold only information about user name

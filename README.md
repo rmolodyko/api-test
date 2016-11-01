@@ -39,3 +39,7 @@ Run tests
 
 1. http://stackoverflow.com/questions/29309215/security-yml-causes-invalidargumentexception-you-must-at-least-add-one-authent
 2. http://symfony.com/doc/current/security/guard_authentication.html
+
+## Common
+
+1. [PHP7 Xdebug install](https://gist.github.com/hollodotme/418e9b7c6ebc358e7fda)

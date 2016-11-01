@@ -51,6 +51,15 @@ class User extends BaseUser
     private $categories;
 
     /**
+     * User constructor.
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->enabled = true;
+    }
+
+    /**
      * Check if user
      */
     public function isUser(UserInterface $user = null)
